@@ -1,0 +1,1507 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduSuite Pro | Klaslokaal Architect & Aanpasbaar Beheersysteem</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;600;700&display=swap');
+
+        :root {
+            --bg: #f8f9fa;
+            --surface: #ffffff;
+            --border: #dadce0;
+            --border-hover: #b0b0b0;
+            --text-main: #202124;
+            --text-sub: #5f6368;
+            --primary: #1a73e8;
+            --primary-hover: #1557b0;
+            --primary-bg: #e8f0fe;
+            --danger: #d93025;
+            --danger-bg: #fce8e6;
+            --success: #188038;
+            --success-bg: #e6f4ea;
+            --teacher: #e37400;
+            --teacher-bg: #fef7e0;
+            --shadow-sm: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 10px;
+            --boy-color: #e8f0fe;
+            --boy-border: #1a73e8;
+            --girl-color: #fce8e6;
+            --girl-border: #d93025;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Google Sans Flex', -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1.5rem 1rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1180px;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 0.5rem;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .brand-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+            box-shadow: 0 2px 6px rgba(26,115,232,0.4);
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-main);
+            letter-spacing: -0.01em;
+        }
+
+        header p {
+            color: var(--text-sub);
+            font-size: 0.85rem;
+        }
+
+        .nav-tabs {
+            display: flex;
+            background: var(--surface);
+            padding: 0.35rem;
+            border-radius: 30px;
+            border: 1px solid var(--border);
+            gap: 0.3rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text-sub);
+            padding: 0.6rem 1rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            background: rgba(0,0,0,0.04);
+            color: var(--text-main);
+        }
+
+        .tab-btn.active {
+            background: var(--primary-bg);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            display: none;
+            flex-direction: column;
+            gap: 1.25rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .card.active {
+            display: flex;
+        }
+
+        .card-header h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .card-header p {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            margin-top: 0.2rem;
+            line-height: 1.4;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-sub);
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 0.65rem 0.85rem;
+            color: var(--text-main);
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.2s ease;
+            -webkit-user-select: text;
+            user-select: text;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(26,115,232,0.15);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            border: none;
+            border-radius: 20px;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            box-shadow: 0 2px 6px rgba(26,115,232,0.3);
+        }
+
+        .btn-secondary {
+            background: var(--bg);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: #eee;
+            border-color: var(--border-hover);
+        }
+
+        .btn-danger-text {
+            background: transparent;
+            color: var(--danger);
+            padding: 0.2rem 0.5rem;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-danger-text:hover {
+            background: var(--danger-bg);
+        }
+
+        .result-box {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+            font-size: 0.95rem;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            white-space: pre-wrap;
+            line-height: 1.5;
+        }
+
+        .status-text {
+            font-size: 0.8rem;
+            color: var(--text-sub);
+            font-style: italic;
+        }
+
+        /* STUDIO LAYOUT */
+        .studio-layout {
+            display: grid;
+            grid-template-columns: 340px 1fr;
+            gap: 1.25rem;
+        }
+
+        @media (max-width: 980px) {
+            .studio-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .controls-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-height: 720px;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+
+        .controls-panel::-webkit-scrollbar {
+            width: 5px;
+        }
+        .controls-panel::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 10px;
+        }
+
+        .section-box {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .canvas-container {
+            position: relative;
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: inset 0 0 8px rgba(0,0,0,0.02);
+        }
+
+        .canvas-toolbar {
+            width: 100%;
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1rem;
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .tool-group {
+            display: flex;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 0.2rem;
+            gap: 0.1rem;
+        }
+
+        .badge-btn {
+            background: transparent;
+            border: none;
+            padding: 0.4rem 0.85rem;
+            border-radius: 16px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-sub);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .badge-btn.active {
+            background: var(--primary-bg);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .badge-btn.teacher-mode.active {
+            background: var(--teacher-bg);
+            color: var(--teacher);
+            font-weight: 600;
+        }
+
+        .toggle-row-mode, .toggle-beams-mode {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-sub);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.2s;
+        }
+
+        .toggle-row-mode.active {
+            background: #fef7e0;
+            border-color: #f9ab00;
+            color: #b06000;
+        }
+
+        .toggle-beams-mode.active {
+            background: #e8f0fe;
+            border-color: #1a73e8;
+            color: #1a73e8;
+        }
+
+        #seatingCanvas {
+            background: #fafafa;
+            cursor: crosshair;
+            width: 100%;
+            height: 560px;
+        }
+
+        .student-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.4rem 0.75rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+        }
+
+        .student-item.boy { border-left: 4px solid var(--boy-border); }
+        .student-item.girl { border-left: 4px solid var(--girl-border); }
+
+        .rules-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .rule-badge {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 0.4rem 0.6rem;
+            border-radius: 8px;
+            font-size: 0.78rem;
+        }
+
+        .keyboard-hint {
+            font-size: 0.75rem;
+            color: var(--text-sub);
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .keyboard-hint kbd {
+            background: #e8eaed;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            padding: 1px 5px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="brand">
+                <div class="brand-icon">E</div>
+                <div>
+                    <h1>EduSuite Studio Pro</h1>
+                    <p>Intelligent Klaslokaal Architect & Geavanceerd Beheersysteem</p>
+                </div>
+            </div>
+        </header>
+
+        <nav class="nav-tabs">
+            <button class="tab-btn active" id="btn-studio" onclick="switchTab('studio')">Plattegrond Studio</button>
+            <button class="tab-btn" id="btn-oven" onclick="switchTab('oven')">Systeem & Telemetrie</button>
+            <button class="tab-btn" id="btn-groups" onclick="switchTab('groups')">Groepsindeling</button>
+            <button class="tab-btn" id="btn-picker" onclick="switchTab('picker')">Selectie Tool</button>
+            <button class="tab-btn" id="btn-excuse" onclick="switchTab('excuse')">Excuus Generator</button>
+        </nav>
+
+        <!-- PLATTEGROND STUDIO -->
+        <div class="card active" id="tab-studio">
+            <div class="card-header">
+                <h2>Slimme Klaslokaal Plattegrond & 360° Zichtveld Solver</h2>
+                <p>Positioneer docentenwerkplekken, activeer <b>360° stralenweergave</b> en bereken de optimale stoelverdeling voor leerlingen binnen het zichtveld.</p>
+            </div>
+
+            <div class="studio-layout">
+                <!-- LINKER PANEEL: CONTROLS -->
+                <div class="controls-panel">
+                    
+                    <!-- LEERLING TOEVOEGEN -->
+                    <div class="section-box">
+                        <label>Leerling Toevoegen</label>
+                        <div style="display: flex; gap: 0.4rem;">
+                            <input type="text" id="studentNameInput" placeholder="Naam leerling...">
+                            <select id="studentGenderSelect" style="width: 85px;">
+                                <option value="boy">J (♂)</option>
+                                <option value="girl">M (♀)</option>
+                            </select>
+                            <button class="btn btn-primary" style="padding: 0.5rem 0.9rem; border-radius: 8px;" onclick="addStudent()">+</button>
+                        </div>
+
+                        <label style="margin-top: 0.3rem;">Klassenlijst (<span id="studentCount">0</span>)</label>
+                        <div id="studentListDisplay" style="display: flex; flex-direction: column; gap: 0.35rem; max-height: 120px; overflow-y: auto;"></div>
+                    </div>
+
+                    <!-- DOCENT VOORKEUREN & ZICHTVELD -->
+                    <div class="section-box" style="border-left: 4px solid var(--teacher);">
+                        <label style="color: var(--teacher);">👨‍🏫 Docent Voorkeuren & Zichtveld</label>
+                        <div style="display: flex; gap: 0.3rem; flex-direction: column;">
+                            <select id="teacherTargetStudent" style="font-size: 0.8rem;"></select>
+                            <div style="display: flex; gap: 0.3rem; align-items: center;">
+                                <select id="teacherTargetMode" style="font-size: 0.78rem;">
+                                    <option value="close">Dichtbij Docent (Afstand)</option>
+                                    <option value="sight">In 360° Gezichtsveld</option>
+                                    <option value="both">Dichtbij EN in Zichtveld</option>
+                                </select>
+                                <button class="btn btn-secondary" style="padding: 0.35rem 0.7rem; border-radius: 6px; font-size: 0.78rem;" onclick="addTeacherRule()">Voeg Toe</button>
+                            </div>
+                        </div>
+                        <div class="rules-list" id="teacherRulesContainer" style="margin-top: 0.3rem;"></div>
+                    </div>
+
+                    <!-- ALGORITME REGELS & PROXIMITY -->
+                    <div class="section-box">
+                        <label>Plaatsingscriteria & Proximity</label>
+                        <div class="grid-2">
+                            <div>
+                                <label style="font-size: 0.7rem;">Max Jongens Naast</label>
+                                <input type="number" id="maxBoysNext" value="2" min="1" max="5">
+                            </div>
+                            <div>
+                                <label style="font-size: 0.7rem;">Max Meisjes Naast</label>
+                                <input type="number" id="maxGirlsNext" value="2" min="1" max="5">
+                            </div>
+                        </div>
+
+                        <label style="margin-top: 0.4rem;">Leerling Scheiding</label>
+                        <div style="display: flex; gap: 0.3rem; flex-direction: column;">
+                            <div style="display: flex; gap: 0.3rem;">
+                                <select id="separationS1" style="font-size: 0.8rem;"></select>
+                                <select id="separationS2" style="font-size: 0.8rem;"></select>
+                            </div>
+                            <div style="display: flex; gap: 0.3rem; align-items: center;">
+                                <select id="separationMode" style="font-size: 0.78rem;">
+                                    <option value="direct">Direct Naast Elkaar (Buren)</option>
+                                    <option value="row">In Dezelfde Rij/Tafelgroep</option>
+                                    <option value="radius">Gehele Zone (Niet in Buurt)</option>
+                                </select>
+                                <button class="btn btn-secondary" style="padding: 0.35rem 0.7rem; border-radius: 6px;" onclick="addSeparationRule()">Voeg Toe</button>
+                            </div>
+                        </div>
+                        <div class="rules-list" id="rulesContainer" style="margin-top: 0.3rem;"></div>
+                    </div>
+
+                    <button class="btn btn-primary" style="width: 100%; border-radius: 10px; padding: 0.75rem;" onclick="solveSeatingLayout()">⚡ Bereken Optimale Indeling</button>
+                    <button class="btn btn-secondary" style="width: 100%; border-radius: 10px;" onclick="clearChairs()">Wis Alle Tafels</button>
+
+                </div>
+
+                <!-- RECHTER PANEEL: CANVAS -->
+                <div class="canvas-container">
+                    <div class="canvas-toolbar">
+                        <span style="font-size: 0.8rem; font-weight: 600; color: var(--text-sub);">Plaatsen:</span>
+                        <div class="tool-group">
+                            <button class="badge-btn active" id="tool-single" onclick="setTableMode('single')">1-Persoons</button>
+                            <button class="badge-btn" id="tool-double" onclick="setTableMode('double')">2-Persoons</button>
+                            <button class="badge-btn teacher-mode" id="tool-teacher" onclick="setTableMode('teacher')">👨‍🏫 Docent Stoel</button>
+                        </div>
+
+                        <button class="toggle-row-mode" id="rowModeBtn" onclick="toggleRowMode()">
+                            <span>🎨 Rij Weergave</span>
+                            <span style="font-size: 0.7rem; opacity: 0.8;">(Shift)</span>
+                        </button>
+
+                        <button class="toggle-beams-mode" id="beamsModeBtn" onclick="toggleBeamsMode()">
+                            <span>📡 360° Stralen</span>
+                            <span style="font-size: 0.7rem; opacity: 0.8;">(Shift + Z)</span>
+                        </button>
+
+                        <div style="flex-grow: 1;"></div>
+
+                        <div class="keyboard-hint">
+                            <span><kbd>Shift + Z</kbd> Stralen</span>
+                            <span><kbd>Shift</kbd> Rij Mode</span>
+                            <span><kbd>R</kbd> Draaien</span>
+                            <span><kbd>Rechtermuisknop</kbd> Wis</span>
+                        </div>
+                    </div>
+
+                    <canvas id="seatingCanvas" width="740" height="560"></canvas>
+                </div>
+            </div>
+
+            <div class="status-text" id="studioStatus">Plaats een docentenstoel op de kaart om het dynamische 360° zichtveld te activeren. Druk op Shift+Z voor stralenweergave.</div>
+            <div class="result-box" id="studioResult" style="text-align: left; justify-content: flex-start; min-height: 44px; font-size: 0.9rem;">
+                Status van de stoelverdeling verschijnt hier...
+            </div>
+        </div>
+
+        <!-- TELEMETRIE / OVEN CHECKER -->
+        <div class="card" id="tab-oven">
+            <div class="card-header">
+                <h2>Systeem- & Telemetriestatus Check</h2>
+                <p>Haalt realtime meteorologische telemetrie op van het Amundsen-Scott station op de Zuidpool, genereert een cryptografische AES-256-GCM sleutel en controleert de status van apparatuur op afstand.</p>
+            </div>
+            
+            <button class="btn btn-primary" style="align-self: flex-start;" onclick="runOvenCheck()">Voer Statuscontrole Uit</button>
+            
+            <div class="status-text" id="ovenStatus">Aan het wachten op opdracht...</div>
+            <div class="result-box" id="ovenResult" style="font-weight: 600; font-size: 1.1rem;">-</div>
+        </div>
+
+        <!-- GROEPJES MAKER -->
+        <div class="card" id="tab-groups">
+            <div class="card-header">
+                <h2>Groepsindeling Generator</h2>
+                <p>Verdeelt de klas in willekeurige, gebalanceerde groepen via een cryptografische randomizer.</p>
+            </div>
+            
+            <div class="form-group">
+                <label>Namen van leerlingen (gescheiden door komma's of nieuwe regels)</label>
+                <textarea id="groupNames" rows="4" placeholder="Emma, Daan, Lucas, Sophie, Milan, Levi, Julia, Luuk"></textarea>
+            </div>
+
+            <div class="grid-2">
+                <div class="form-group">
+                    <label>Aantal personen per groep</label>
+                    <input type="number" id="groupSize" value="3" min="1" max="10">
+                </div>
+                <div class="form-group">
+                    <label>Verwerking van restgroepen</label>
+                    <select id="unevenOption">
+                        <option value="absorb">Verdelen over bestaande groepen (grotere groepen)</option>
+                        <option value="isolate">Plaatsen in een aparte kleinere groep</option>
+                    </select>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" style="align-self: flex-start;" onclick="runGroupGenerator()">Genereer Groepen</button>
+
+            <div class="result-box" id="groupResult" style="text-align: left; justify-content: flex-start;">De gegenereerde groepsindeling verschijnt hier...</div>
+        </div>
+
+        <!-- LEERLING LOTING / SELECTIE TOOL -->
+        <div class="card" id="tab-picker">
+            <div class="card-header">
+                <h2>Willekeurige Leerling Selectie</h2>
+                <p>Selecteert op objectieve wijze een willekeurige leerling uit de lijst op basis van geëncarpeerde entropie-bits.</p>
+            </div>
+            
+            <div class="form-group">
+                <label>Namenlijst van de klas</label>
+                <textarea id="pickerNames" rows="4" placeholder="Plak hier de namenlijst..."></textarea>
+            </div>
+
+            <button class="btn btn-primary" style="align-self: flex-start;" onclick="runPicker()">Start Selectie</button>
+
+            <div class="result-box" id="pickerResult" style="font-weight: 600; font-size: 1.2rem; color: var(--primary);">Nog geen leerling geselecteerd</div>
+        </div>
+
+        <!-- EXCUUS GENERATOR -->
+        <div class="card" id="tab-excuse">
+            <div class="card-header">
+                <h2>Excuus Generator voor Schoolopdrachten</h2>
+                <p>Genereert een technisch en inhoudelijk onderbouwd excuus afgestemd op de geselecteerde opdrachtcategorie.</p>
+            </div>
+            
+            <div class="form-group">
+                <label>Type Opdracht</label>
+                <select id="excuseCategory" style="max-width: 320px;">
+                    <option value="homework">Huiswerk (Schriftelijk / Digitaal)</option>
+                    <option value="presentation">Spreekbeurt / Presentatie</option>
+                    <option value="project">Groepsproject / Werkstuk</option>
+                    <option value="read">Leesopdracht / Boekverslag</option>
+                    <option value="pe">Lichamelijke Opvoeding / Praktijk</option>
+                </select>
+            </div>
+
+            <button class="btn btn-primary" style="align-self: flex-start;" onclick="runExcuseGen()">Genereer Excuus</button>
+
+            <div class="result-box" id="excuseResult" style="font-style: italic; color: var(--text-sub);">Selecteer een categorie en klik op de knop om een excuus te genereren...</div>
+        </div>
+    </div>
+
+    <script>
+        // TAB NAVIGATIE
+        function switchTab(tabId) {
+            document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(`tab-${tabId}`).classList.add('active');
+            document.getElementById(`btn-${tabId}`).classList.add('active');
+            if(tabId === 'studio') setTimeout(drawCanvas, 10);
+        }
+
+        // PLATTEGROND ENGINE
+        const canvas = document.getElementById('seatingCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let tableMode = 'single'; 
+        let currentRotation = 0; 
+        let isCtrlPressed = false;
+        let isRowModeEnabled = false;
+        let isBeamsModeEnabled = false;
+
+        const ROW_COLORS = [
+            '#4285f4', '#ea4335', '#fbbc05', '#34a853', 
+            '#af52de', '#ff9500', '#5856d6', '#00c7be', '#ff2d55'
+        ];
+        
+        let chairs = []; 
+        let students = [
+            { id: 1, name: "Daan", gender: "boy" },
+            { id: 2, name: "Lucas", gender: "boy" },
+            { id: 3, name: "Milan", gender: "boy" },
+            { id: 4, name: "Levi", gender: "boy" },
+            { id: 5, name: "Emma", gender: "girl" },
+            { id: 6, name: "Sophie", gender: "girl" },
+            { id: 7, name: "Julia", gender: "girl" },
+            { id: 8, name: "Tess", gender: "girl" },
+            { id: 9, name: "Bram", gender: "boy" },
+            { id: 10, name: "Lotte", gender: "girl" }
+        ];
+
+        let separationRules = [];
+        let teacherRules = [];
+        let mousePos = { x: -100, y: -100 };
+
+        function initDemoChairs() {
+            chairs.push({ id: 999, x: 370, y: 55, isDouble: false, isTeacher: true, rotation: 180, active1: true, student1Id: null });
+
+            chairs.push({ id: 1, x: 180, y: 180, isDouble: true, rotation: 0, active1: true, active2: true, student1Id: null, student2Id: null });
+            chairs.push({ id: 2, x: 272, y: 180, isDouble: true, rotation: 0, active1: true, active2: true, student1Id: null, student2Id: null });
+            chairs.push({ id: 3, x: 460, y: 180, isDouble: true, rotation: 0, active1: true, active2: true, student1Id: null, student2Id: null });
+            chairs.push({ id: 4, x: 552, y: 180, isDouble: true, rotation: 0, active1: true, active2: false, student1Id: null, student2Id: null });
+
+            chairs.push({ id: 5, x: 180, y: 310, isDouble: true, rotation: 0, active1: true, active2: true, student1Id: null, student2Id: null });
+            chairs.push({ id: 6, x: 272, y: 310, isDouble: true, rotation: 0, active1: true, active2: true, student1Id: null, student2Id: null });
+            chairs.push({ id: 7, x: 460, y: 310, isDouble: false, rotation: 0, active1: true, active2: true, student1Id: null });
+
+            teacherRules.push({ studentId: 1, mode: 'both' });
+
+            updateStudentSelects();
+            renderStudentList();
+            renderTeacherRules();
+            detectSmartRows();
+            drawCanvas();
+        }
+
+        function detectSmartRows() {
+            chairs.forEach(c => c.rowIndex = -1);
+            let currentRowIdx = 0;
+
+            for (let i = 0; i < chairs.length; i++) {
+                if (chairs[i].isTeacher || chairs[i].rowIndex !== -1) continue;
+
+                let queue = [chairs[i]];
+                chairs[i].rowIndex = currentRowIdx;
+
+                while (queue.length > 0) {
+                    let curr = queue.shift();
+
+                    for (let j = 0; j < chairs.length; j++) {
+                        let target = chairs[j];
+                        if (target.isTeacher || target.rowIndex !== -1) continue;
+
+                        const w1 = curr.isDouble ? 92 : 48;
+                        const w2 = target.isDouble ? 92 : 48;
+                        const dx = Math.abs(curr.x - target.x);
+                        const dy = Math.abs(curr.y - target.y);
+
+                        if (dx < (w1/2 + w2/2 + 20) && dy < 60) {
+                            target.rowIndex = currentRowIdx;
+                            queue.push(target);
+                        }
+                    }
+                }
+                currentRowIdx++;
+            }
+        }
+
+        function getSeatWorldPos(chair, slotNum) {
+            const rad = (chair.rotation * Math.PI) / 180;
+            if (!chair.isDouble) {
+                return { x: chair.x, y: chair.y };
+            } else {
+                const dx = Math.cos(rad) * (slotNum === 1 ? -22 : 22);
+                const dy = Math.sin(rad) * (slotNum === 1 ? -22 : 22);
+                return { x: chair.x + dx, y: chair.y + dy };
+            }
+        }
+
+        // 360-DEGREE FULL VISION CONE RADIUS
+        function isPointInSightCone(teacherChair, px, py) {
+            const tPos = getSeatWorldPos(teacherChair, 1);
+            const dist = Math.hypot(px - tPos.x, py - tPos.y);
+            return dist <= 550; 
+        }
+
+        canvas.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            chairs = chairs.filter(c => {
+                const w = c.isTeacher ? 52 : (c.isDouble ? 92 : 48);
+                const h = 48;
+                return !(Math.abs(c.x - x) < w/2 + 5 && Math.abs(c.y - y) < h/2 + 5);
+            });
+            detectSmartRows();
+            drawCanvas();
+        });
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Control') isCtrlPressed = true;
+            if ((e.key === 'z' || e.key === 'Z') && e.shiftKey) {
+                toggleBeamsMode();
+            } else if (e.key === 'Shift') {
+                toggleRowMode();
+            }
+            if (e.key === 'r' || e.key === 'R') {
+                currentRotation = (currentRotation + 90) % 360;
+                drawCanvas();
+            }
+        });
+
+        window.addEventListener('keyup', (e) => {
+            if (e.key === 'Control') isCtrlPressed = false;
+        });
+
+        function toggleRowMode() {
+            isRowModeEnabled = !isRowModeEnabled;
+            const btn = document.getElementById('rowModeBtn');
+            if (isRowModeEnabled) btn.classList.add('active');
+            else btn.classList.remove('active');
+            drawCanvas();
+        }
+
+        function toggleBeamsMode() {
+            isBeamsModeEnabled = !isBeamsModeEnabled;
+            const btn = document.getElementById('beamsModeBtn');
+            if (isBeamsModeEnabled) btn.classList.add('active');
+            else btn.classList.remove('active');
+            drawCanvas();
+        }
+
+        canvas.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            mousePos.x = e.clientX - rect.left;
+            mousePos.y = e.clientY - rect.top;
+            drawCanvas();
+        });
+
+        canvas.addEventListener('mouseleave', () => {
+            mousePos = { x: -100, y: -100 };
+            drawCanvas();
+        });
+
+        canvas.addEventListener('click', (e) => {
+            if (e.button !== 0) return;
+
+            const rect = canvas.getBoundingClientRect();
+            let x = e.clientX - rect.left;
+            let y = e.clientY - rect.top;
+
+            let clickedOnSeat = false;
+            for (let c of chairs) {
+                if (c.isTeacher) continue;
+
+                if (!c.isDouble) {
+                    const pos = getSeatWorldPos(c, 1);
+                    if (Math.hypot(pos.x - x, pos.y - y) < 18) {
+                        c.active1 = !c.active1;
+                        clickedOnSeat = true; break;
+                    }
+                } else {
+                    const pos1 = getSeatWorldPos(c, 1);
+                    const pos2 = getSeatWorldPos(c, 2);
+                    if (Math.hypot(pos1.x - x, pos1.y - y) < 18) {
+                        c.active1 = !c.active1; clickedOnSeat = true; break;
+                    } else if (Math.hypot(pos2.x - x, pos2.y - y) < 18) {
+                        c.active2 = !c.active2; clickedOnSeat = true; break;
+                    }
+                }
+            }
+
+            if (clickedOnSeat) { drawCanvas(); return; }
+
+            if (!isCtrlPressed) {
+                x = Math.round(x / 20) * 20;
+                y = Math.round(y / 20) * 20;
+            }
+
+            if (tableMode === 'single') {
+                chairs.push({
+                    id: Date.now(), x, y, isDouble: false, isTeacher: false,
+                    rotation: currentRotation, active1: true, student1Id: null, rowIndex: 0
+                });
+            } else if (tableMode === 'double') {
+                chairs.push({
+                    id: Date.now(), x, y, isDouble: true, isTeacher: false,
+                    rotation: currentRotation, active1: true, active2: true, student1Id: null, student2Id: null, rowIndex: 0
+                });
+            } else if (tableMode === 'teacher') {
+                chairs.push({
+                    id: Date.now(), x, y, isDouble: false, isTeacher: true,
+                    rotation: currentRotation, active1: true, student1Id: null
+                });
+            }
+            detectSmartRows();
+            drawCanvas();
+        });
+
+        function setTableMode(mode) {
+            tableMode = mode;
+            document.querySelectorAll('.tool-group .badge-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(`tool-${mode}`).classList.add('active');
+        }
+
+        function clearChairs() {
+            chairs = [];
+            drawCanvas();
+        }
+
+        function drawSeat(x, y, label, gender, isActive, rowColor) {
+            ctx.save();
+            ctx.translate(x, y);
+
+            let fillStyle = '#ffffff';
+            let borderStyle = isRowModeEnabled ? rowColor : '#a0a0a0';
+
+            if (!isActive) {
+                fillStyle = '#e0e0e0'; borderStyle = '#9e9e9e';
+            } else if (gender === 'boy') {
+                fillStyle = '#e8f0fe'; borderStyle = isRowModeEnabled ? rowColor : '#1a73e8';
+            } else if (gender === 'girl') {
+                fillStyle = '#fce8e6'; borderStyle = isRowModeEnabled ? rowColor : '#d93025';
+            }
+
+            ctx.fillStyle = fillStyle;
+            ctx.strokeStyle = borderStyle;
+            ctx.lineWidth = isRowModeEnabled ? 2.5 : 1.5;
+            ctx.beginPath();
+            ctx.roundRect(-16, -16, 32, 32, 6);
+            ctx.fill();
+            ctx.stroke();
+
+            ctx.fillStyle = borderStyle;
+            ctx.fillRect(-12, 11, 24, 3);
+
+            if (!isActive) {
+                ctx.strokeStyle = '#757575';
+                ctx.lineWidth = 2;
+                ctx.beginPath(); ctx.moveTo(-6, -6); ctx.lineTo(6, 6); ctx.moveTo(6, -6); ctx.lineTo(-6, 6); ctx.stroke();
+            } else if (label) {
+                ctx.fillStyle = '#202124';
+                ctx.font = '600 10px Google Sans Flex';
+                ctx.textAlign = 'center';
+                ctx.fillText(label, 0, 3);
+            }
+
+            ctx.restore();
+        }
+
+        function drawTeacherSeat(x, y) {
+            ctx.save();
+            ctx.translate(x, y);
+
+            ctx.fillStyle = '#fef7e0';
+            ctx.strokeStyle = '#e37400';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.roundRect(-24, -22, 48, 44, 8);
+            ctx.fill();
+            ctx.stroke();
+
+            ctx.fillStyle = '#b06000';
+            ctx.font = '700 11px Google Sans Flex';
+            ctx.textAlign = 'center';
+            ctx.fillText('👨‍🏫 360°', 0, 3);
+
+            ctx.strokeStyle = 'rgba(227, 116, 0, 0.6)';
+            ctx.lineWidth = 1.5;
+            ctx.setLineDash([3, 3]);
+            ctx.beginPath();
+            ctx.arc(0, 0, 30, 0, Math.PI * 2);
+            ctx.stroke();
+
+            ctx.restore();
+        }
+
+        function drawTeacherBeams(tc) {
+            const rayLength = 650;
+            const numRays = 72;
+
+            ctx.save();
+            ctx.translate(tc.x, tc.y);
+
+            for (let i = 0; i < numRays; i++) {
+                const angle = (i / numRays) * (Math.PI * 2);
+                const rayX = Math.cos(angle) * rayLength;
+                const rayY = Math.sin(angle) * rayLength;
+
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.lineTo(rayX, rayY);
+
+                const opacity = (i % 2 === 0) ? 0.45 : 0.25;
+                ctx.strokeStyle = `rgba(255, 160, 0, ${opacity})`;
+                ctx.lineWidth = 1.2;
+                ctx.setLineDash([5, 5]);
+                ctx.stroke();
+
+                for (let dist = 60; dist < rayLength; dist += 90) {
+                    const px = Math.cos(angle) * dist;
+                    const py = Math.sin(angle) * dist;
+                    ctx.fillStyle = 'rgba(255, 180, 0, 0.6)';
+                    ctx.beginPath();
+                    ctx.arc(px, py, 1.8, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            ctx.restore();
+        }
+
+        function drawCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Grid
+            ctx.strokeStyle = '#f0f0f0';
+            ctx.lineWidth = 1;
+            for (let x = 0; x < canvas.width; x += 20) {
+                ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+            }
+            for (let y = 0; y < canvas.height; y += 20) {
+                ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+            }
+
+            // Central Display / Digibord
+            ctx.fillStyle = '#e8eaed';
+            ctx.fillRect(canvas.width / 2 - 130, 8, 260, 18);
+            ctx.fillStyle = '#5f6368';
+            ctx.font = '600 10px Google Sans Flex';
+            ctx.textAlign = 'center';
+            ctx.fillText('DIGIBORD / CENTRAAL SCHERM', canvas.width / 2, 21);
+
+            // 360-Degree Vision Cone & Beams
+            const teacherChairs = chairs.filter(c => c.isTeacher);
+            teacherChairs.forEach(tc => {
+                const sightRadius = 450;
+
+                ctx.save();
+                ctx.translate(tc.x, tc.y);
+
+                const grad = ctx.createRadialGradient(0, 0, 10, 0, 0, sightRadius);
+                grad.addColorStop(0, 'rgba(254, 215, 0, 0.22)');
+                grad.addColorStop(1, 'rgba(254, 215, 0, 0.01)');
+
+                ctx.fillStyle = grad;
+                ctx.beginPath();
+                ctx.arc(0, 0, sightRadius, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.strokeStyle = 'rgba(227, 116, 0, 0.35)';
+                ctx.setLineDash([4, 4]);
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+
+                ctx.restore();
+
+                if (isBeamsModeEnabled) {
+                    drawTeacherBeams(tc);
+                }
+            });
+
+            // Tables & Chairs
+            chairs.forEach(c => {
+                ctx.save();
+                ctx.translate(c.x, c.y);
+                ctx.rotate((c.rotation * Math.PI) / 180);
+
+                if (c.isTeacher) {
+                    drawTeacherSeat(0, 0);
+                } else {
+                    const rowColor = ROW_COLORS[c.rowIndex % ROW_COLORS.length];
+
+                    if (!c.isDouble) {
+                        ctx.fillStyle = isRowModeEnabled ? `${rowColor}15` : '#ffffff';
+                        ctx.strokeStyle = isRowModeEnabled ? rowColor : (c.active1 ? '#dadce0' : '#bdbdbd');
+                        ctx.lineWidth = isRowModeEnabled ? 2.5 : 2;
+                        ctx.beginPath();
+                        ctx.roundRect(-24, -24, 48, 48, 8);
+                        ctx.fill(); ctx.stroke();
+
+                        const st = c.active1 ? students.find(s => s.id === c.student1Id) : null;
+                        drawSeat(0, 0, st ? st.name : null, st ? st.gender : null, c.active1, rowColor);
+                    } else {
+                        ctx.fillStyle = isRowModeEnabled ? `${rowColor}15` : '#ffffff';
+                        ctx.strokeStyle = isRowModeEnabled ? rowColor : ((c.active1 || c.active2) ? '#dadce0' : '#bdbdbd');
+                        ctx.lineWidth = isRowModeEnabled ? 2.5 : 2;
+                        ctx.beginPath();
+                        ctx.roundRect(-46, -24, 92, 48, 8);
+                        ctx.fill(); ctx.stroke();
+
+                        ctx.strokeStyle = isRowModeEnabled ? rowColor : '#f0f0f0';
+                        ctx.lineWidth = 1;
+                        ctx.beginPath(); ctx.moveTo(0, -20); ctx.lineTo(0, 20); ctx.stroke();
+
+                        const st1 = c.active1 ? students.find(s => s.id === c.student1Id) : null;
+                        drawSeat(-22, 0, st1 ? st1.name : null, st1 ? st1.gender : null, c.active1, rowColor);
+
+                        const st2 = c.active2 ? students.find(s => s.id === c.student2Id) : null;
+                        drawSeat(22, 0, st2 ? st2.name : null, st2 ? st2.gender : null, c.active2, rowColor);
+                    }
+                }
+
+                ctx.restore();
+            });
+
+            // Cursor Preview
+            if (mousePos.x > 0) {
+                let px = isCtrlPressed ? mousePos.x : Math.round(mousePos.x / 20) * 20;
+                let py = isCtrlPressed ? mousePos.y : Math.round(mousePos.y / 20) * 20;
+
+                ctx.save();
+                ctx.translate(px, py);
+                ctx.rotate((currentRotation * Math.PI) / 180);
+                ctx.strokeStyle = tableMode === 'teacher' ? '#e37400' : '#1a73e8';
+                ctx.lineWidth = 1.5;
+                ctx.setLineDash([3, 3]);
+
+                if (tableMode === 'single' || tableMode === 'teacher') {
+                    ctx.strokeRect(-24, -24, 48, 48);
+                } else {
+                    ctx.strokeRect(-46, -24, 92, 48);
+                }
+                ctx.restore();
+            }
+        }
+
+        function addStudent() {
+            const nameInput = document.getElementById('studentNameInput');
+            const genderSelect = document.getElementById('studentGenderSelect');
+            const name = nameInput.value.trim();
+
+            if (name) {
+                students.push({ id: Date.now(), name, gender: genderSelect.value });
+                nameInput.value = '';
+                renderStudentList();
+                updateStudentSelects();
+            }
+        }
+
+        function removeStudent(id) {
+            students = students.filter(s => s.id !== id);
+            separationRules = separationRules.filter(r => r.s1Id !== id && r.s2Id !== id);
+            teacherRules = teacherRules.filter(r => r.studentId !== id);
+            renderStudentList();
+            updateStudentSelects();
+            renderRules();
+            renderTeacherRules();
+        }
+
+        function renderStudentList() {
+            const container = document.getElementById('studentListDisplay');
+            document.getElementById('studentCount').innerText = students.length;
+            container.innerHTML = '';
+
+            students.forEach(s => {
+                const item = document.createElement('div');
+                item.className = `student-item ${s.gender}`;
+                item.innerHTML = `
+                    <span><b>${s.name}</b> (${s.gender === 'boy' ? 'J' : 'M'})</span>
+                    <button class="btn-danger-text" onclick="removeStudent(${s.id})">✕</button>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        function updateStudentSelects() {
+            const s1 = document.getElementById('separationS1');
+            const s2 = document.getElementById('separationS2');
+            const tSel = document.getElementById('teacherTargetStudent');
+            s1.innerHTML = ''; s2.innerHTML = ''; tSel.innerHTML = '';
+
+            students.forEach(s => {
+                s1.add(new Option(s.name, s.id));
+                s2.add(new Option(s.name, s.id));
+                tSel.add(new Option(s.name, s.id));
+            });
+        }
+
+        function addTeacherRule() {
+            const studentId = parseInt(document.getElementById('teacherTargetStudent').value);
+            const mode = document.getElementById('teacherTargetMode').value;
+
+            if (studentId) {
+                if (!teacherRules.some(r => r.studentId === studentId)) {
+                    teacherRules.push({ studentId, mode });
+                    renderTeacherRules();
+                }
+            }
+        }
+
+        function renderTeacherRules() {
+            const container = document.getElementById('teacherRulesContainer');
+            container.innerHTML = '';
+            teacherRules.forEach((r, idx) => {
+                const st = students.find(s => s.id === r.studentId);
+                if (st) {
+                    const modeTxt = r.mode === 'close' ? 'Dichtbij Docent' : (r.mode === 'sight' ? 'In 360° Zichtveld' : 'Dichtbij + Zichtveld');
+                    const badge = document.createElement('div');
+                    badge.className = 'rule-badge';
+                    badge.style.borderLeft = '3px solid var(--teacher)';
+                    badge.innerHTML = `
+                        <span><b>${st.name}</b> → ${modeTxt}</span>
+                        <span class="btn-danger-text" style="cursor:pointer;" onclick="removeTeacherRule(${idx})">✕</span>
+                    `;
+                    container.appendChild(badge);
+                }
+            });
+        }
+
+        function removeTeacherRule(idx) {
+            teacherRules.splice(idx, 1);
+            renderTeacherRules();
+        }
+
+        function addSeparationRule() {
+            const s1Id = parseInt(document.getElementById('separationS1').value);
+            const s2Id = parseInt(document.getElementById('separationS2').value);
+            const mode = document.getElementById('separationMode').value;
+
+            if (s1Id && s2Id && s1Id !== s2Id) {
+                if (!separationRules.some(r => (r.s1Id === s1Id && r.s2Id === s2Id) || (r.s1Id === s2Id && r.s2Id === s1Id))) {
+                    separationRules.push({ s1Id, s2Id, mode });
+                    renderRules();
+                }
+            }
+        }
+
+        function renderRules() {
+            const container = document.getElementById('rulesContainer');
+            container.innerHTML = '';
+            separationRules.forEach((r, idx) => {
+                const st1 = students.find(s => s.id === r.s1Id);
+                const st2 = students.find(s => s.id === r.s2Id);
+                if (st1 && st2) {
+                    const modeTxt = r.mode === 'direct' ? 'Niet naast' : (r.mode === 'row' ? 'Niet in zelfde rij' : 'Ruime Zone');
+                    const badge = document.createElement('div');
+                    badge.className = 'rule-badge';
+                    badge.innerHTML = `
+                        <span><b>${st1.name} ↔ ${st2.name}</b> (${modeTxt})</span>
+                        <span class="btn-danger-text" style="cursor:pointer;" onclick="removeRule(${idx})">✕</span>
+                    `;
+                    container.appendChild(badge);
+                }
+            });
+        }
+
+        function removeRule(idx) {
+            separationRules.splice(idx, 1);
+            renderRules();
+        }
+
+        async function solveSeatingLayout() {
+            detectSmartRows();
+
+            const status = document.getElementById('studioStatus');
+            const result = document.getElementById('studioResult');
+
+            const teacherChairs = chairs.filter(c => c.isTeacher);
+            if (teacherChairs.length === 0 && teacherRules.length > 0) {
+                result.innerText = `⚠️ Er is geen docentenstoel aanwezig op de plattegrond! Plaats eerst een docentenstoel om de zichtlijnen te berekenen.`;
+                result.style.color = "var(--danger)";
+                return;
+            }
+
+            let seatSlots = [];
+            chairs.forEach(c => {
+                if (c.isTeacher) return;
+                const rad = (c.rotation * Math.PI) / 180;
+                if (!c.isDouble) {
+                    if (c.active1) seatSlots.push({ chairId: c.id, slot: 1, x: c.x, y: c.y, rowIndex: c.rowIndex });
+                } else {
+                    const dx = Math.cos(rad) * 22;
+                    const dy = Math.sin(rad) * 22;
+                    if (c.active1) seatSlots.push({ chairId: c.id, slot: 1, x: c.x - dx, y: c.y - dy, rowIndex: c.rowIndex });
+                    if (c.active2) seatSlots.push({ chairId: c.id, slot: 2, x: c.x + dx, y: c.y + dy, rowIndex: c.rowIndex });
+                }
+            });
+
+            if (seatSlots.length < students.length) {
+                result.innerText = `⚠️ Onvoldoende actieve stoelen! Er zijn ${students.length} leerlingen geregistreerd, maar slechts ${seatSlots.length} stoelen beschikbaar.`;
+                result.style.color = "var(--danger)";
+                return;
+            }
+
+            status.innerText = "Bezig met optimalisatie: 360° zichtlijnen en afstanden berekenen...";
+            await new Promise(r => setTimeout(r, 200));
+
+            const maxBoysNext = parseInt(document.getElementById('maxBoysNext').value) || 2;
+            const maxGirlsNext = parseInt(document.getElementById('maxGirlsNext').value) || 2;
+
+            let bestAssignment = null;
+            let lowestPenalty = Infinity;
+
+            for (let iter = 0; iter < 6000; iter++) {
+                let shuffled = [...students].sort(() => Math.random() - 0.5);
+                let assignment = {}; 
+                seatSlots.forEach((_, idx) => {
+                    assignment[idx] = shuffled[idx] ? shuffled[idx].id : null;
+                });
+
+                let penalty = 0;
+
+                if (teacherChairs.length > 0) {
+                    const mainTeacher = teacherChairs[0];
+                    const tPos = getSeatWorldPos(mainTeacher, 1);
+
+                    teacherRules.forEach(rule => {
+                        seatSlots.forEach((slot, idx) => {
+                            if (assignment[idx] === rule.studentId) {
+                                const dist = Math.hypot(slot.x - tPos.x, slot.y - tPos.y);
+                                const inSight = isPointInSightCone(mainTeacher, slot.x, slot.y);
+
+                                if (rule.mode === 'close' || rule.mode === 'both') {
+                                    penalty += dist * 2; 
+                                }
+
+                                if ((rule.mode === 'sight' || rule.mode === 'both') && !inSight) {
+                                    penalty += 1200;
+                                }
+                            }
+                        });
+                    });
+                }
+
+                separationRules.forEach(rule => {
+                    seatSlots.forEach((slot1, idx1) => {
+                        if (assignment[idx1] === rule.s1Id) {
+                            seatSlots.forEach((slot2, idx2) => {
+                                if (idx1 !== idx2 && assignment[idx2] === rule.s2Id) {
+                                    const dist = Math.hypot(slot1.x - slot2.x, slot1.y - slot2.y);
+                                    if (rule.mode === 'direct' && dist < 65) penalty += 800;
+                                    else if (rule.mode === 'row' && slot1.rowIndex === slot2.rowIndex) penalty += 600;
+                                    else if (rule.mode === 'radius' && dist < 160) penalty += 500;
+                                }
+                            });
+                        }
+                    });
+                });
+
+                seatSlots.forEach((slot1, idx1) => {
+                    const st1 = students.find(s => s.id === assignment[idx1]);
+                    if (st1) {
+                        let sameGenderCount = 0;
+                        seatSlots.forEach((slot2, idx2) => {
+                            if (idx1 !== idx2 && Math.hypot(slot1.x - slot2.x, slot1.y - slot2.y) < 65) {
+                                const st2 = students.find(s => s.id === assignment[idx2]);
+                                if (st2 && st2.gender === st1.gender) sameGenderCount++;
+                            }
+                        });
+                        if (st1.gender === 'boy' && sameGenderCount >= maxBoysNext) penalty += 50;
+                        if (st1.gender === 'girl' && sameGenderCount >= maxGirlsNext) penalty += 50;
+                    }
+                });
+
+                if (penalty < lowestPenalty) {
+                    lowestPenalty = penalty;
+                    bestAssignment = assignment;
+                    if (penalty === 0) break;
+                }
+            }
+
+            chairs.forEach(c => { if (!c.isTeacher) { c.student1Id = null; c.student2Id = null; } });
+            seatSlots.forEach((slot, idx) => {
+                const chair = chairs.find(c => c.id === slot.chairId);
+                if (chair && !chair.isTeacher) {
+                    if (slot.slot === 1) chair.student1Id = bestAssignment[idx];
+                    if (slot.slot === 2) chair.student2Id = bestAssignment[idx];
+                }
+            });
+
+            drawCanvas();
+            status.innerText = "Berekening succesvol voltooid.";
+
+            let report = [];
+            if (teacherChairs.length > 0) {
+                const mainTeacher = teacherChairs[0];
+                teacherRules.forEach(r => {
+                    const st = students.find(s => s.id === r.studentId);
+                    const slotIdx = Object.keys(bestAssignment).find(k => bestAssignment[k] === r.studentId);
+                    if (st && slotIdx !== undefined) {
+                        const slot = seatSlots[slotIdx];
+                        const inSight = isPointInSightCone(mainTeacher, slot.x, slot.y);
+                        const dist = Math.round(Math.hypot(slot.x - mainTeacher.x, slot.y - mainTeacher.y));
+                        report.push(`${st.name}: ${inSight ? '👁️ In 360° bereik' : '⚠️ Buiten bereik'} (${dist}px van docent)`);
+                    }
+                });
+            }
+
+            result.style.color = lowestPenalty < 200 ? "var(--success)" : "var(--text-main)";
+            result.innerText = `✓ Plattegrond berekend!\n` + (report.length > 0 ? report.join(' | ') : 'Alle opgestelde criteria zijn succesvol verwerkt.');
+        }
+
+        async function getAES256ParityBit(inputData) {
+            const key = await crypto.subtle.generateKey({ name: "AES-GCM", length: 256 }, true, ["encrypt"]);
+            const iv = crypto.getRandomValues(new Uint8Array(12));
+            const encoded = new TextEncoder().encode(inputData + "_" + Date.now());
+            const encrypted = await crypto.subtle.encrypt({ name: "AES-GCM", iv }, key, encoded);
+            return new Uint8Array(encrypted)[0] % 2 === 0;
+        }
+
+        async function runOvenCheck() {
+            const status = document.getElementById('ovenStatus');
+            const result = document.getElementById('ovenResult');
+            status.innerText = "Meteorologische data ophalen via API (Amundsen-Scott Station)...";
+            let temp = -42.5;
+            try {
+                const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-89.99&longitude=-139.27&current=temperature_2m');
+                const data = await res.json();
+                temp = data.current.temperature_2m;
+            } catch {}
+            const isEven = await getAES256ParityBit("OVEN_" + temp);
+            status.innerText = "AES-256 GCM cryptografische analyse voltooid.";
+            result.innerText = isEven ? "ACTIEF: De apparatuur staat nog aan." : "INACTIEF: De apparatuur is uitgeschakeld.";
+            result.style.color = isEven ? "var(--danger)" : "var(--success)";
+        }
+
+        async function runGroupGenerator() {
+            const rawText = document.getElementById('groupNames').value;
+            const size = parseInt(document.getElementById('groupSize').value) || 3;
+            const option = document.getElementById('unevenOption').value;
+            const result = document.getElementById('groupResult');
+
+            let names = rawText.split(/[\n,]+/).map(n => n.trim()).filter(n => n.length > 0);
+            if (names.length === 0) names = ["Emma", "Daan", "Lucas", "Sophie", "Milan", "Levi", "Julia", "Luuk"];
+
+            names.sort(() => Math.random() - 0.5);
+            let groups = [];
+            for (let i = 0; i < names.length; i += size) groups.push(names.slice(i, i + size));
+
+            if (groups.length > 1 && groups[groups.length - 1].length < size && option === 'absorb') {
+                const last = groups.pop();
+                last.forEach((p, idx) => groups[idx % groups.length].push(p));
+            }
+
+            result.innerText = groups.map((g, i) => `Groep ${i + 1}: ${g.join(', ')}`).join('\n');
+        }
+
+        async function runPicker() {
+            const rawText = document.getElementById('pickerNames').value;
+            const result = document.getElementById('pickerResult');
+            let names = rawText.split(/[\n,]+/).map(n => n.trim()).filter(n => n.length > 0);
+            if (names.length === 0) names = ["Emma", "Daan", "Lucas", "Sophie", "Milan", "Levi"];
+
+            for (let i = 0; i < 10; i++) {
+                await new Promise(r => setTimeout(r, 50));
+                result.innerText = names[Math.floor(Math.random() * names.length)];
+            }
+            result.innerText = `Gekozen: ${names[Math.floor(Math.random() * names.length)]}`;
+        }
+
+        function runExcuseGen() {
+            const category = document.getElementById('excuseCategory').value;
+            const excuseMap = {
+                homework: [
+                    "Het inleverbestand op OneDrive raakte gecorrumpeerd door een mislukte cryptografische synchronisatie op de server.",
+                    "Het document is per ongeluk overschreven door een automatische OS-update tijdens het opslaan.",
+                    "De lokale database is gecrasht waardoor mijn schriftelijke uitwerkingen onleesbaar geëxporteerd zijn.",
+                    "De beveiligingssoftware zag mijn document aan voor een potentiële bedreiging en heeft het in quarantaine geplaatst."
+                ],
+                presentation: [
+                    "De presentatie gebruikt geavanceerde videocodecs die de grafische kaart van het systeem lieten crashen.",
+                    "Mijn externe opslagmedium raakte beschadigd door statische ontlading bij het aansluiten op het netwerk.",
+                    "De cloudpresentatiedienst voerde precies op dit moment ongepland onderhoud uit aan de verwerkingsservers.",
+                    "Vocal cord fatigue door veranderde luchtdruk maakt een mondelinge presentatie tijdelijk medisch onverantwoord."
+                ],
+                project: [
+                    "Er ontstond een versiemerge-conflict in de gedeelde cloudmap waardoor de bijdragen van het team zijn overschreven.",
+                    "Een teamlid heeft per ongeluk de opslagrechten gewijzigd, waardoor het document tijdelijk geblokkeerd is.",
+                    "Onze onderzoeksgegevens bleken incompleet door een verouderde API-backend, waardoor we opnieuw moesten indexeren.",
+                    "De versiebeheersoftware van ons project heeft de wijzigingen van de afgelopen 24 uur automatisch teruggedraaid."
+                ],
+                read: [
+                    "Het e-book vertoonde DRM-licentiefouten, waardoor de pagina's na het eerste hoofdstuk geblokkeerd raakten.",
+                    "Het fysieke exemplaar is per ongeluk ingepakt in de retourbox van de online bibliotheekdienst.",
+                    "De e-reader geraakte in een oneindige bootloop tijdens het synchroniseren van het laatste hoofdstuk.",
+                    "De vertaal- en annotatielaag in het bestand bleek corrupt waardoor alle kerntekst onleesbaar werd."
+                ],
+                pe: [
+                    "De sportuitrusting is per ongeluk in de afgesloten kluis van een andere student terechtgekomen.",
+                    "De kleding droogt nog na een acute reinigingsprocedure wegens een vloeistofincident.",
+                    "De ritssluiting van de sporttas is defect geraakt, waardoor de inhoud niet schadevrij bereikbaar is.",
+                    "Er is sprake van een acute spierverzuur-reactie in de onderste extremiteiten door verkeerde belasting."
+                ]
+            };
+
+            const selectedList = excuseMap[category] || excuseMap.homework;
+            const randomExcuse = selectedList[Math.floor(Math.random() * selectedList.length)];
+            document.getElementById('excuseResult').innerText = `"${randomExcuse}"`;
+        }
+
+        window.onload = () => {
+            initDemoChairs();
+        };
+    </script>
+</body>
+</html>
